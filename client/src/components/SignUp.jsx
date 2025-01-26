@@ -26,16 +26,27 @@ const SignUp = () => {
         },
         body: JSON.stringify({ ...data, role }),
       });
-       const result = await response.text();
-       
-       toast.success( result);
+
+      const contentType = response.headers.get("content-type");
+      let result;
+
+      if (contentType && contentType.includes("application/json")) {
+        result = await response.json();
+      } else {
+        result = await response.text();
+      }
+
+      if (response.ok) {
+        toast.success(result.message || result || "Signup successful");
+      } else {
+        toast.error(result.error || result || "Signup failed");
+      }
     } catch (error) {
-      toast.error("Error:", error);
-      console.log("the error is: " , error);
+      toast.error(error.message);
+      console.log("Error:", error.message);
     } finally {
       setIsSubmitting(false);
     }
-
   };
 
   return (

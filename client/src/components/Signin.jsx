@@ -24,8 +24,11 @@ const Signin = () => {
       });
       
       const result = await response.json();
-    
-      toast.success( result.message);
+      if (response.ok) {
+        toast.success(result.message);
+      } else {
+        toast.error(result.error || "Signin failed.");
+      }
     } catch (error) {
       toast.error(`Error: ${error.message}`);
     } finally {

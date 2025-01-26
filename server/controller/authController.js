@@ -1,8 +1,8 @@
-// import User from '../models/userModel';
-const User = require('../models/userModel');
-exports.signup = async (req, res) => {
+import User from '../models/userModel.js';
+
+export const signup = async (req, res) => {
   const { firstname, lastname, email, password, role } = req.body;
-  console.log("request form user: " , firstname, lastname, email, password, role)
+  console.log("request from user: ", firstname, lastname, email, password, role);
   try {
     const existingUser = await User.findOne({ $or: [{ email }] });
     if (existingUser) {
@@ -14,28 +14,23 @@ exports.signup = async (req, res) => {
     res.status(201).send('User signed up successfully');
   } catch (error) {
     res.status(500).send('Error signing up user');
-    console.log(error)
+    console.log(error);
   }
 };
-exports.signin = async (req, res) => {
+
+export const signin = async (req, res) => {
   const { email, password } = req.body;
   try {
-    // Find the user by email
-    console.log("request from user: " , email , password);
-    const user = await User.findOne({email});
+    console.log("request from user: ", email, password);
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ error: 'User not found. Please sign up.' });
     }
-
-    // Validate password
-    // const validPassword = await user.comparePassword(password);
-    // if (!validPassword) {
-    //   return res.status(401).json({ error: 'Invalid password. Please try again.' });
-    // }
-    // Successful login
-    res.status(200).json({ message: 'Login successful' , user });
+    res.status(200).json({ message: 'Login successful', user });
   } catch (error) {
     res.status(500).json({ error: 'Login failed' });
     console.log(error);
   }
 };
+
+
