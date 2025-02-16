@@ -13,7 +13,7 @@ const ChatBox = () => {
 
     try {
       // Send the message to the Gemini API
-      const response = await axios.post('http://localhost:3000/api/gemini', { prompt: input });
+      const response = await axios.post('/api/gemini', { prompt: input });
 
       // Add the API's response to the chat
       setMessages((prevMessages) => [
