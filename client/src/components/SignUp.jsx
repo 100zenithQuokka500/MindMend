@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { toast } from 'react-toastify';
+import { useAuth } from "../context/AuthContext";
 
 const SignUp = () => {
   const {
@@ -10,45 +11,59 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
   const [role, setRole] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  // const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const onSubmit =async (data) => {
-    if (!role) {
+  // const onSubmit =async (data) => {
+  //   if (!role) {
+  //     toast.warn("You need to select either Patient or Provider");
+  //     return;
+  //   }
+  //   setIsSubmitting(true);
+  //   try {
+  //     const response = await fetch("http://localhost:3000/api/signup", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ ...data, role }),
+  //     });
+
+  //     const contentType = response.headers.get("content-type");
+  //     let result;
+
+  //     if (contentType && contentType.includes("application/json")) {
+  //       result = await response.json();
+  //     } else {
+  //       result = await response.text();
+  //     }
+
+  //     if (response.ok) {
+  //       toast.success(result.message || result || "Signup successful");
+  //     } else {
+  //       toast.error(result.error || result || "Signup failed");
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //     console.log("Error:", error.message);
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+  const {registerUser  , isLoading} = useAuth();
+  const onSubmit = async(data)=>{
+    if(!role){
       toast.warn("You need to select either Patient or Provider");
       return;
     }
-    setIsSubmitting(true);
     try {
-      const response = await fetch("http://localhost:3000/api/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...data, role }),
-      });
-
-      const contentType = response.headers.get("content-type");
-      let result;
-
-      if (contentType && contentType.includes("application/json")) {
-        result = await response.json();
-      } else {
-        result = await response.text();
-      }
-
-      if (response.ok) {
-        toast.success(result.message || result || "Signup successful");
-      } else {
-        toast.error(result.error || result || "Signup failed");
-      }
+      const response = await registerUser({...data , role});
+      console.log("the response from signUp component! " , response);
+      toast.success(response?.message || response || "Signup successful");
     } catch (error) {
       toast.error(error.message);
       console.log("Error:", error.message);
-    } finally {
-      setIsSubmitting(false);
     }
-  };
-
+  }
   return (
     <form className="max-w-md mx-auto p-10 bg-white m-10 shadow-lg rounded-lg" onSubmit={handleSubmit(onSubmit)} action="POST">
       <h1 className="text-3xl font-bold mb-6 text-center">Sign Up</h1>
@@ -149,10 +164,10 @@ const SignUp = () => {
       {errors.termsandconditions && <div className="text-red-500 mt-1">{errors.termsandconditions.message}</div>}
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={isLoading}
         className="w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white py-3 rounded-lg shadow-lg hover:from-purple-600 hover:to-blue-600 transition duration-300"
       >
-        {isSubmitting ? "Submitting..." : "Register"}
+        {isLoading ? "Submitting..." : "Register"}
       </button>
       <p className="mt-4 text-center text-gray-600">By signing up, you agree to the Terms of Service</p>
     </form>

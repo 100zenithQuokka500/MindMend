@@ -41,6 +41,7 @@ const Navbar = () => {
                 </button>
             </div>
             <div ref={navRef} className="hidden flex-col items-center md:hidden bg-purple-500 w-full ml-16 pb-12">
+                {}
                 <ul className="flex flex-col space-y-4 ml-2">
                     <li className="navbar-item">
                         <a href="/" className="text-white hover:text-gray-200 font-bold">Home</a>
