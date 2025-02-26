@@ -1,2 +1,31 @@
+<<<<<<< HEAD
 server/node_modules
 server/.env
+=======
+# Node.js
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+pids
+logs
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Environment variables
+.env*
+>>>>>>> db188a12be84791db36e33a492f62e7ceda630d6
