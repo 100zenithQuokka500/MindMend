@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 server/node_modules
 server/.env
-=======
 # Node.js
 node_modules/
 
@@ -28,4 +26,3 @@ logs
 
 # Environment variables
 .env*
->>>>>>> db188a12be84791db36e33a492f62e7ceda630d6
