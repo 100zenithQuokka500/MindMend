@@ -14,6 +14,7 @@ const getAndDeleteReq = async(url , method)=>{
         return response?.data;
     } catch (error) {
         console.log("error from getAndDeleteReq! " , error);
+        throw error;
     }
 }
 
@@ -32,6 +33,7 @@ const postAndPatchReq = async(url , method , data , isFormData=false)=>{
         return response?.data;
     } catch (error) {
         console.log("error from postAndPatchReq! " , error);
+        throw error;
     }
 }
 

@@ -12,7 +12,7 @@ const AuthContext = createContext({
 const useAuth = ()=>useContext(AuthContext);
 const AuthProvider = ({children})=>{
     const [user , setUser] = useState(null);
-    const [isError , setIsError] = useState(false);
+    const [isError , setIsError] = useState(null);
     const [isLoading , setIsLoading] = useState(false);
 
     useEffect(()=>{
@@ -22,10 +22,12 @@ const AuthProvider = ({children})=>{
                 const response = await getAndDeleteReq(`${baseUrl}/user/me` , "get");
                 console.log("response from AuthContext! " , response?.data);
                 setUser(response?.data);
-                return response?.data;
+                return {success:true , data:response?.data};
             } catch (error) {
                 console.log("error from AuthContext! " , error);
-                setIsError(true);
+                const errorMessage = error.response?.data?.message || "unable to find current user. Please refresh page!.";
+                setIsError(errorMessage);
+                return { success: false, error: errorMessage || "unable to find current user.." };
             }finally{
                 setIsLoading(false);
             }
@@ -38,10 +40,12 @@ const AuthProvider = ({children})=>{
             const response = await postAndPatchReq(`${baseUrl}/user/signup` , "post" , data);
             console.log("the response AuhtContext! " , response);
             setUser(response?.data);
-            return response;
+            return {success:true , data:response?.data};
         } catch (error) {
             console.log("error from AuthContext! " , error);
-            setIsError(true);
+            const errorMessage = error.response?.data?.message || "unable to find current user. Please refresh page!.";
+            setIsError(errorMessage);
+            return { success: false, error: errorMessage || "unable to find current user.." };
         }finally{
             setIsLoading(false);
         }
@@ -52,10 +56,12 @@ const AuthProvider = ({children})=>{
             const response = await postAndPatchReq(`${baseUrl}/user/signin` , "post" , data);
             console.log("response from AuthContext! " , response?.data);
             setUser(response?.data);
-            return response;
+            return {success:true , data:response?.data};
         } catch (error) {
             console.log("error from AuthContext! " , error);
-            setIsError(true);
+            const errorMessage = error.response?.data?.message || "unable to find current user. Please refresh page!.";
+            setIsError(errorMessage);
+            return { success: false, error: errorMessage || "unable to find current user.." };
         }finally{
             setIsLoading(false);
         }
@@ -66,10 +72,12 @@ const AuthProvider = ({children})=>{
             const response = await getAndDeleteReq(`${baseUrl}/user/logout` , "get");
             console.log("response from AuthContext! " , response);
             setUser(null);
-            return response;
+            return {success:true , data:response?.data};
         } catch (error) {
             console.log("error from AuthContext! " , error);
-            setIsError(true);
+            const errorMessage = error.response?.data?.message || "unable to find current user. Please refresh page!.";
+            setIsError(errorMessage);
+            return { success: false, error: errorMessage || "unable to find current user.." };
         }finally{
             setIsLoading(false);
         }

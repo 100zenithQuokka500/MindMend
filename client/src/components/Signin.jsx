@@ -36,16 +36,14 @@ const Signin = () => {
   //     setIsSubmitting(false);
   //   }
   // };
-  const {loginUser , isLoading} = useAuth();
+  const {loginUser , isLoading , isError} = useAuth();
   const onSubmit = async(data)=>{
-    try {
-      const response = await loginUser(data);
-      console.log("the response from signUp component! " , response);
+    const response = await loginUser(data);
+    if(response.success){
+      console.log("the response from signin-Page! " , response);
       toast.success(response?.message || response || "Signup successful");
-    } catch (error) {
-      toast.error(error.message);
-      console.log("Error:", error.message);
     }
+    toast.error(isError || "signin failed!");
   }
 
   return (

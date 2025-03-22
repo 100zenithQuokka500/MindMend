@@ -49,20 +49,18 @@ const SignUp = () => {
   //     setIsSubmitting(false);
   //   }
   // };
-  const {registerUser  , isLoading} = useAuth();
+  const {registerUser  , isLoading , isError} = useAuth();
   const onSubmit = async(data)=>{
     if(!role){
       toast.warn("You need to select either Patient or Provider");
       return;
     }
-    try {
-      const response = await registerUser({...data , role});
-      console.log("the response from signUp component! " , response);
+    const response = await registerUser(data);
+    if(response.data){
+      console.log("response from signup-Page! " , response);
       toast.success(response?.message || response || "Signup successful");
-    } catch (error) {
-      toast.error(error.message);
-      console.log("Error:", error.message);
     }
+    toast.error(isError || "signup failed! ");
   }
   return (
     <form className="max-w-md mx-auto p-10 bg-white m-10 shadow-lg rounded-lg" onSubmit={handleSubmit(onSubmit)} action="POST">
