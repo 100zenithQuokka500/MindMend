@@ -29,7 +29,7 @@ const Navbar = () => {
                             <NavLink to="/findtherapists" className="text-white hover:text-gray-200 font-bold">Find Therapists</NavLink>
                         </li>
                         <li className="navbar-item">
-                            <NavLink to="/api/signin" className="text-white border-white border-2 p-2 rounded-xl hover:text-gray-200 font-bold">Signin</NavLink>
+                            <NavLink to="/signin" className="text-white border-white border-2 p-2 rounded-xl hover:text-gray-200 font-bold">Signin</NavLink>
                         </li>
                         <li className="navbar-item">
                             <NavLink to="/signup" className="text-purple-500 bg-white border-2 p-2 rounded-xl hover:text-purple-400 font-bold">Signup</NavLink>

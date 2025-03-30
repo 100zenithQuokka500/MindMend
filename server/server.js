@@ -15,7 +15,7 @@ app.use(cookieParser())
 
 connectDB();
 
-const allowedOrigins = ["http://localhost:5174/" , ""];
+const allowedOrigins = ["http://localhost:5174" , ""];
 const corsOption = {
     origin:function(origin , callback){
         if(!origin || allowedOrigins.includes(origin)){

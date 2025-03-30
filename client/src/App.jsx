@@ -12,7 +12,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/findtherapists" element={<FindTherapists />} />
-        <Route path="/api/signin" element={<SignInPage />} />
+        <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         {/* Redirect all unknown paths to Home */}
         <Route path="*" element={<Navigate to="/" />} />

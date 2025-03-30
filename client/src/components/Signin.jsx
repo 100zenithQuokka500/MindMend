@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { useForm } from "react-hook-form";
 // import { useState } from "react";
-import { toast } from 'react-toastify';
 import { useAuth } from "../context/AuthContext";
+import { ToastContainer , toast } from 'react-toastify';
 
 const Signin = () => {
   const {
@@ -38,13 +38,14 @@ const Signin = () => {
   // };
   const {loginUser , isLoading} = useAuth();
   const onSubmit = async(data)=>{
-    try {
-      const response = await loginUser(data);
-      console.log("the response from signUp component! " , response);
-      toast.success(response?.message || response || "Signup successful");
-    } catch (error) {
-      toast.error(error.message);
-      console.log("Error:", error.message);
+    const response = await loginUser(data);
+    if(response.success){
+      console.log("the response from signin-Page! " , response);
+      toast.success("Signin successful");
+    }
+    else{
+      console.log(response.error);
+      toast.error(response.error);
     }
   }
 
@@ -85,6 +86,7 @@ const Signin = () => {
       >
        {isLoading ? "Submitting..." : "Login →"} 
       </button>
+      <ToastContainer />
     </form>
   );
 };

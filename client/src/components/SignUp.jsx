@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { toast } from 'react-toastify';
 import { useAuth } from "../context/AuthContext";
+import { ToastContainer , toast} from 'react-toastify';
 
 const SignUp = () => {
   const {
@@ -49,19 +49,20 @@ const SignUp = () => {
   //     setIsSubmitting(false);
   //   }
   // };
-  const {registerUser  , isLoading} = useAuth();
+  const {registerUser  , isLoading } = useAuth();
   const onSubmit = async(data)=>{
     if(!role){
       toast.warn("You need to select either Patient or Provider");
       return;
     }
-    try {
-      const response = await registerUser({...data , role});
-      console.log("the response from signUp component! " , response);
-      toast.success(response?.message || response || "Signup successful");
-    } catch (error) {
-      toast.error(error.message);
-      console.log("Error:", error.message);
+    const response = await registerUser(data);
+    if(response.success){
+      console.log("response from signup-Page! " , response);
+      toast.success("Signup successful");
+    }
+    else{
+      console.log(response.error);
+      toast.error(response.error);
     }
   }
   return (
@@ -170,6 +171,7 @@ const SignUp = () => {
         {isLoading ? "Submitting..." : "Register"}
       </button>
       <p className="mt-4 text-center text-gray-600">By signing up, you agree to the Terms of Service</p>
+      <ToastContainer />
     </form>
   );
 };
