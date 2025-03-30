@@ -20,12 +20,14 @@ const AuthProvider = ({children})=>{
             try {
                 setIsLoading(true);
                 const response = await getAndDeleteReq(`${baseUrl}/user/me` , "get");
+                setIsError(null);
                 console.log("response from AuthContext! " , response?.data);
                 setUser(response?.data);
-                return response?.data;
+                return { success: true, data: response?.data };
+                // return response?.data;
             } catch (error) {
-                console.log("error from AuthContext! " , error);
-                setIsError(true);
+                console.log("error from getAndDeleteReq! " , error?.response?.data);
+                throw error;
             }finally{
                 setIsLoading(false);
             }
@@ -36,12 +38,13 @@ const AuthProvider = ({children})=>{
         try {
             setIsLoading(true);
             const response = await postAndPatchReq(`${baseUrl}/user/signup` , "post" , data);
+            setIsError(null);
             console.log("the response AuhtContext! " , response);
             setUser(response?.data);
-            return response;
+            return { success: true, data: response?.data };
         } catch (error) {
-            console.log("error from AuthContext! " , error);
-            setIsError(true);
+            console.log("error from ! postAndPatchReq" , error?.response?.data);
+            throw error;
         }finally{
             setIsLoading(false);
         }
@@ -50,12 +53,13 @@ const AuthProvider = ({children})=>{
         try {
             setIsLoading(true);
             const response = await postAndPatchReq(`${baseUrl}/user/signin` , "post" , data);
+            setIsError(null);
             console.log("response from AuthContext! " , response?.data);
             setUser(response?.data);
-            return response;
+            return { success: true, data: response?.data };
         } catch (error) {
-            console.log("error from AuthContext! " , error);
-            setIsError(true);
+            console.log("error from ! postAndPatchReq" , error?.response?.data);
+            throw error;
         }finally{
             setIsLoading(false);
         }
@@ -64,12 +68,13 @@ const AuthProvider = ({children})=>{
         try {
             setIsLoading(true);
             const response = await getAndDeleteReq(`${baseUrl}/user/logout` , "get");
+            setIsError(null);
             console.log("response from AuthContext! " , response);
             setUser(null);
-            return response;
+            return { success: true, data: response?.data };
         } catch (error) {
-            console.log("error from AuthContext! " , error);
-            setIsError(true);
+            console.log("error from ! getAndDeleteReq" , error?.response?.data);
+            throw error;
         }finally{
             setIsLoading(false);
         }
