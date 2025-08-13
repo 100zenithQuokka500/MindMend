@@ -5,8 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   server:{
     proxy:{
-       '/api':process.env.URL
-    },
+       '/api':'https://mindmend-backend-1y9v.onrender.com'    },
   },
   plugins: [react()],
 })
