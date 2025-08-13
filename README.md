@@ -2,7 +2,7 @@
 
 ![MindMend Website](client/public/images/Screenshot%202025-08-13%20201832.png)
 
- **Live Website**: [Visit MindMend](https://mindmend-frontend-l1fj.onrender.com)
+ **Live Website**: [MindMend](https://mindmend-frontend-l1fj.onrender.com)
 
 ##  Overview
 
