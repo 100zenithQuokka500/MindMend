@@ -1,6 +1,6 @@
 # MindMend - AI-Powered Mental Health Platform
 
-![MindMend Logo](Screenshot 2025-08-13 201832.png)
+![MindMend Website](client/public/images/Screenshot%202025-08-13%20201832.png)
 
 ##  Overview
 
