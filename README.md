@@ -1,31 +1,31 @@
 # MindMend - AI-Powered Mental Health Platform
 
-![MindMend Logo]()
+![MindMend Logo](Screenshot 2025-08-13 201832.png)
 
-## 🌟 Overview
+##  Overview
 
 MindMend is a mental health support platform that provides 24/7 AI-powered therapeutic conversations through Google's Gemini AI and access to emergency helpline numbers. The platform offers a safe, confidential space for users to discuss their mental health concerns and get immediate support when needed.
 
-## ✨ Features
+##  Features
 
-### 🤖 AI-Powered Therapy Chat
+###  AI-Powered Therapy Chat
 - **24/7 AI Support**: Access therapeutic conversations anytime with Google Gemini AI
 - **Personalized Responses**: AI adapts to your conversation style and needs
 - **Safe Space**: Confidential and judgment-free environment for mental health discussions
 
 
 
-### 🔐 User Authentication
+###  User Authentication
 - **Secure Registration**: User-friendly signup process
 - **Protected Routes**: Secure access to chat functionality
 - **User Profiles**: Personalized experience for each user
 
-### 📱 Modern User Interface
+###  Modern User Interface
 - **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
 - **Intuitive Navigation**: Clean and accessible user interface
 - **Professional Design**: Modern UI with Tailwind CSS styling
 
-### 🆘 Emergency Support
+###  Emergency Support
 - **Crisis Helplines**: Quick access to emergency mental health resources
 - **24/7 Support**: Round-the-clock crisis intervention information
 
