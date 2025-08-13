@@ -2,6 +2,8 @@
 
 ![MindMend Website](client/public/images/Screenshot%202025-08-13%20201832.png)
 
+ **Live Website**: [Visit MindMend](https://mindmend-frontend-l1fj.onrender.com)
+
 ##  Overview
 
 MindMend is a mental health support platform that provides 24/7 AI-powered therapeutic conversations through Google's Gemini AI and access to emergency helpline numbers. The platform offers a safe, confidential space for users to discuss their mental health concerns and get immediate support when needed.
