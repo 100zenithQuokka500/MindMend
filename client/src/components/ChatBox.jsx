@@ -4,33 +4,33 @@ import axios from 'axios';
 const ChatBox = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const sendMessage = async () => {
-    if (!input.trim()) return; // Prevent sending empty messages
-
-    // Add the user's message to the chat
+    if (!input.trim()) return; 
     setMessages([...messages, { text: input, user: 'You' }]);
-
+    setIsLoading(true);
     try {
-      // Send the message to the Gemini API
       const response = await axios.post(`/api/v1/user/gemini`, { prompt: input });
-
-      // Add the API's response to the chat
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: response.data.response, user: 'Gemini' },
-      ]);
+      if (response.data.success && response.data.response) {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: response.data.response, user: 'Gemini' },
+        ]);
+      } else {
+        throw new Error('Invalid response format from API');
+      }
     } catch (error) {
       console.error('Error:', error);
-      // Optionally, add an error message to the chat
+      const errorMessage = error.response?.data?.error || error.message || 'Unable to get a response from the API';
       setMessages((prevMessages) => [
         ...prevMessages,
-        { text: 'Error: Unable to get a response from the API', user: 'System' },
+        { text: `Error: ${errorMessage}`, user: 'System' },
       ]);
+    } finally {
+      setIsLoading(false);
+      setInput('');
     }
-
-    // Clear the input field
-    setInput('');
   };
 
   return (
@@ -39,11 +39,16 @@ const ChatBox = () => {
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`message ${msg.user === 'You' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'} p-3 rounded-lg mb-2`}
+            className={`message ${msg.user === 'You' ? 'bg-blue-500 text-white' : msg.user === 'System' ? 'bg-red-200 text-red-800' : 'bg-gray-200 text-black'} p-3 rounded-lg mb-2`}
           >
             <p>{msg.text}</p>
           </div>
         ))}
+        {isLoading && (
+          <div className="message bg-gray-200 text-black p-3 rounded-lg mb-2">
+            <p>Gemini is thinking...</p>
+          </div>
+        )}
       </div>
       <input
         type="text"
@@ -51,12 +56,14 @@ const ChatBox = () => {
         onChange={(e) => setInput(e.target.value)}
         placeholder="Type your message..."
         className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 mb-4"
+        disabled={isLoading}
       />
       <button
-        onClick={sendMessage} // Corrected onClick attribute
-        className="w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white py-3 rounded-lg shadow-lg hover:from-purple-600 hover:to-blue-600 transition duration-300"
+        onClick={sendMessage}
+        disabled={isLoading || !input.trim()}
+        className="w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white py-3 rounded-lg shadow-lg hover:from-purple-600 hover:to-blue-600 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Send
+        {isLoading ? 'Sending...' : 'Send'}
       </button>
     </div>
   );

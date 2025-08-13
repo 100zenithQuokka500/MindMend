@@ -2,8 +2,10 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { toast } from 'react-toastify';
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -11,44 +13,6 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
   const [role, setRole] = useState("");
-  // const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // const onSubmit =async (data) => {
-  //   if (!role) {
-  //     toast.warn("You need to select either Patient or Provider");
-  //     return;
-  //   }
-  //   setIsSubmitting(true);
-  //   try {
-  //     const response = await fetch("http://localhost:3000/api/signup", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ ...data, role }),
-  //     });
-
-  //     const contentType = response.headers.get("content-type");
-  //     let result;
-
-  //     if (contentType && contentType.includes("application/json")) {
-  //       result = await response.json();
-  //     } else {
-  //       result = await response.text();
-  //     }
-
-  //     if (response.ok) {
-  //       toast.success(result.message || result || "Signup successful");
-  //     } else {
-  //       toast.error(result.error || result || "Signup failed");
-  //     }
-  //   } catch (error) {
-  //     toast.error(error.message);
-  //     console.log("Error:", error.message);
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
   const {registerUser  , isLoading} = useAuth();
   const onSubmit = async(data)=>{
     if(!role){
@@ -57,11 +21,9 @@ const SignUp = () => {
     }
     try {
       const response = await registerUser({...data , role});
-      console.log("the response from signUp component! " , response);
-      toast.success(response?.message || response || "Signup successful");
+      navigate('/chat');
     } catch (error) {
-      toast.error(error.message);
-      console.log("Error:", error.message);
+      console.log("Signup Error:", error);
     }
   }
   return (
@@ -109,11 +71,11 @@ const SignUp = () => {
           <input
             {...register("password", {
               required: { value: true, message: "This field is required" },
-              // minLength: { value: 6, message: "Minimum Length is 6" },
-              // maxLength: { value: 10, message: "Maximum Length is 10" },
-              // pattern: {
-              //   value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,10}$/,
-              //   message: "Password must contain one uppercase, one lowercase, one number, and one special character"},
+              minLength: { value: 8, message: "Minimum Length is 8" },
+              pattern: {
+                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                message: "Password must contain one uppercase, one lowercase, one number, and one special character"
+              },
             })}
             type="password"
             placeholder="Password"

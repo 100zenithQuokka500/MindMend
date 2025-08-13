@@ -43,20 +43,20 @@ const Faqs = () => {
 
 const faqData = [
   {
-    question: 'Is it safe to use AI therapy notes?',
-    answer: 'Yes, it is safe to use AI therapy notes. Our system ensures that all data is encrypted and securely stored.',
+    question: 'How secure is my personal information on MindMend?',
+    answer: 'Your privacy and security are our top priorities. We employ enterprise-grade encryption and maintain strict HIPAA compliance to ensure all your data remains completely confidential and protected.',
   },
   {
-    question: 'Will your AI therapist replace Human therapist?',
-    answer: 'No, our AI therapist is designed to complement human therapists, not replace them. It provides immediate support and can refer you to professional therapists when needed.',
+    question: 'Can the AI companion replace human therapists?',
+    answer: 'Our AI companion is designed to complement, not replace, human therapists. It provides immediate support and guidance while helping you connect with qualified professionals when you need more specialized care.',
   },
   {
-    question: 'How do you make sure that your client data stays private?',
-    answer: 'We use advanced encryption methods to ensure that all client data is kept private and secure. Only authorized personnel have access to the data.',
+    question: 'What measures do you take to protect client confidentiality?',
+    answer: 'We implement multiple layers of security including end-to-end encryption, secure data centers, and strict access controls. Only authorized personnel can access data, and all interactions are completely private.',
   },
   {
-    question: 'Is MindMend free to use?',
-    answer: 'MindMend offers both free and premium plans. The free plan includes basic features, while the premium plan provides additional benefits and services.',
+    question: 'What are the costs associated with using MindMend?',
+    answer: 'MindMend offers flexible pricing options to meet different needs. We provide a free tier with essential features, plus premium plans that unlock advanced capabilities and enhanced support services.',
   },
 ];
 

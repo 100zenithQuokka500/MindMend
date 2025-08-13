@@ -3,10 +3,9 @@ const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth' // Smooth scrolling effect
+      behavior: 'smooth' 
     });
   };
-
   return (
     <footer className="bg-purple-500 text-white py-12">
       <div className="container mx-auto px-4">
@@ -46,12 +45,6 @@ const Footer = () => {
         </div>
         <div className="mt-8 flex flex-col md:flex-row md:justify-between items-center">
           <p className="text-white">© {currentYear} MindMend Corp. All Rights Reserved</p>
-          {/* <ul className="flex space-x-4 mt-4 md:mt-0">
-            <li><img src="" alt="Social Icon" className="w-6 h-6" /><a href="#" className="text-white hover:text-white"> </a></li>
-            <li><img src="" alt="Social Icon" className="w-6 h-6" /><a href="#" className="text-white hover:text-white"> </a></li>
-            <li><img src="" alt="Social Icon" className="w-6 h-6" /><a href="#" className="text-white hover:text-white"> </a></li>
-            <li><img src="" alt="Social Icon" className="w-6 h-6" /><a href="#" className="text-white hover:text-white"> </a></li>
-          </ul> */}
         </div>
       </div>
     </footer>

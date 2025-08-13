@@ -11,15 +11,24 @@ const { JWT_SECRET, JWT_EXPIRES_IN } = process.env;
 const generateToken = (user)=>{
   return jwt.sign({id:user._id , name:user.firstname} , JWT_SECRET , {expiresIn:JWT_EXPIRES_IN});
 }
+const isProd = process.env.NODE_ENV === 'production';
 const cookieOptions = {
-  httpOnly:true,
-  secure:true,
-  sameSite:"None"
-}
+  httpOnly: true,
+  secure: isProd, // only secure in production; allows localhost dev
+  sameSite: isProd ? "None" : "Lax",
+};
 export const signup = async (req, res) => {
   try {
     const { firstname, lastname, email, password, role } = req.body;
-    console.log("the request body is! " , firstname, lastname, email, password, role);
+    
+    // Password validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({ 
+        error: 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)' 
+      });
+    }
+
     const existingUser = await User.findOne({ email })
     if (existingUser) {
       return res.status(400).json({ error: 'Username or email already exists. Please log in.' });
@@ -44,7 +53,6 @@ export const signup = async (req, res) => {
 
 export const signin = async (req, res) => {
   const { email, password } = req.body;
-  console.log("the request body is! " , email, password);
   try {
     const user = await User.findOne({ email });
     if (!user) {

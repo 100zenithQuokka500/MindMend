@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3000/api/v1";
+const baseUrl = "/api/v1";
 const getAndDeleteReq = async(url , method)=>{
     try {
         const response = await axios({
@@ -10,10 +10,9 @@ const getAndDeleteReq = async(url , method)=>{
             },
             withCredentials:true,
         })
-        console.log("response from getAndDeleteReq! " , response?.data);
         return response?.data;
     } catch (error) {
-        console.log("error from getAndDeleteReq! " , error);
+        throw error;
     }
 }
 
@@ -28,10 +27,9 @@ const postAndPatchReq = async(url , method , data , isFormData=false)=>{
             },
             withCredentials:true
         })
-        console.log("response from postAndPatchReq! " , response?.data);
         return response?.data;
     } catch (error) {
-        console.log("error from postAndPatchReq! " , error);
+        throw error;
     }
 }
 

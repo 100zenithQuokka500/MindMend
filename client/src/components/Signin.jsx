@@ -1,50 +1,23 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-// import { useState } from "react";
 import { toast } from 'react-toastify';
 import { useAuth } from "../context/AuthContext";
 
 const Signin = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  // const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // const onSubmit = async(data) => {
-  //   setIsSubmitting(true);
-  //   try{
-  //     const response = await fetch("http://localhost:3000/api/signin", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ ...data }),
-  //     });
-      
-  //     const result = await response.json();
-  //     if (response.ok) {
-  //       toast.success(result.message);
-  //     } else {
-  //       toast.error(result.error || "Signin failed.");
-  //     }
-  //   } catch (error) {
-  //     toast.error(`Error: ${error.message}`);
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
   const {loginUser , isLoading} = useAuth();
   const onSubmit = async(data)=>{
     try {
       const response = await loginUser(data);
-      console.log("the response from signUp component! " , response);
-      toast.success(response?.message || response || "Signup successful");
+      navigate('/chat');
     } catch (error) {
-      toast.error(error.message);
-      console.log("Error:", error.message);
+      console.log("Login Error:", error);
     }
   }
 
@@ -64,7 +37,7 @@ const Signin = () => {
           placeholder="Email or Username"
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
         />
-        {errors.username && <div className="text-red-500 mt-1">{errors.username.message}</div>}
+        {errors.email && <div className="text-red-500 mt-1">{errors.email.message}</div>}
       </div>
       <div className="mb-4">
         <input

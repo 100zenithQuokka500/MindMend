@@ -15,20 +15,10 @@ app.use(cookieParser())
 
 connectDB();
 
-const allowedOrigins = ["http://localhost:5174/" , ""];
 const corsOption = {
-    origin:function(origin , callback){
-        if(!origin || allowedOrigins.includes(origin)){
-            callback(null , true);
-        }
-        else{
-            console.log("blocked by origin: " , origin)
-        }
-    },
-    credentials:true,
-    optionsSuccessStatus: 200
-};
-
+  origin: process.env.CORS_ORIGIN,
+  credentials:true
+}
 app.use(cors(corsOption));
 
 app.get('/',(req,res)=>{
@@ -37,7 +27,7 @@ app.get('/',(req,res)=>{
 app.use('/api/v1/user', router);
 
 app.listen(port, () => {
-  console.log(`Server is running`)
+  console.log(`Server is running on port http://localhost:${port}`)
 });
 
 
