@@ -2,7 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
-import router from './router/auth-router.js';
+import authRouter from './router/auth-router.js';
+import chatRouter from './router/chat-router.js';
 import cookieParser from 'cookie-parser';
 dotenv.config();
 
@@ -24,7 +25,8 @@ app.use(cors(corsOption));
 app.get('/',(req,res)=>{
   res.send('hi')
 })
-app.use('/api/v1/user', router);
+app.use('/api/v1/user', authRouter);
+app.use('/api/v1/chat', chatRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port http://localhost:${port}`)

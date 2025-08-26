@@ -1,6 +1,4 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { toast } from 'react-toastify';
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -12,15 +10,10 @@ const SignUp = () => {
     watch,
     formState: { errors },
   } = useForm();
-  const [role, setRole] = useState("");
   const {registerUser  , isLoading} = useAuth();
   const onSubmit = async(data)=>{
-    if(!role){
-      toast.warn("You need to select either Patient or Provider");
-      return;
-    }
     try {
-      const response = await registerUser({...data , role});
+      const response = await registerUser({...data});
       navigate('/chat');
     } catch (error) {
       console.log("Signup Error:", error);
@@ -95,23 +88,6 @@ const SignUp = () => {
           />
           {errors.confirmPassword && <div className="text-red-500 mt-1">{errors.confirmPassword.message}</div>}
         </div>
-      </div>
-      <p className="mb-2">I am a</p>
-      <div className="chose flex space-x-4 mb-4">
-        <button
-          type="button"
-          className={`w-full py-2 rounded-lg ${role === "Patient" ? "bg-purple-600" : "bg-purple-500"} text-white hover:bg-purple-600`}
-          onClick={() => setRole("Patient")}
-        >
-          Patient
-        </button>
-        <button
-          type="button"
-          className={`w-full py-2 rounded-lg ${role === "Provider" ? "bg-purple-600" : "bg-purple-500"} text-white hover:bg-purple-600`}
-          onClick={() => setRole("Provider")}
-        >
-          Provider
-        </button>
       </div>
       <div className="flex items-center mb-4">
         <input

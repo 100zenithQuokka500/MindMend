@@ -19,7 +19,7 @@ const cookieOptions = {
 };
 export const signup = async (req, res) => {
   try {
-    const { firstname, lastname, email, password, role } = req.body;
+    const { firstname, lastname, email, password } = req.body;
     
     // Password validation
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -35,7 +35,7 @@ export const signup = async (req, res) => {
     }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const newUser = new User({ firstname, lastname, email, password: hashedPassword, role });
+    const newUser = new User({ firstname, lastname, email, password: hashedPassword });
     await newUser.save({ newUser });
     const accessToken = await generateToken(newUser);
     res.status(201).cookie("accessToken" , accessToken , cookieOptions).json({

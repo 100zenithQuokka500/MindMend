@@ -1,13 +1,26 @@
 import axios from "axios";
+import Message from '../models/message.js';
 
 const gemini = async (req, res) => {
-  const { prompt } = req.body;
+  const { prompt, conversationId } = req.body;
+  const userId = req.user?.id; 
 
   if (!prompt) {
     return res.status(400).json({ error: 'Prompt is required' });
   }
 
   try {
+   
+    if (userId && conversationId) {
+      const userMessage = new Message({
+        text: prompt,
+        user: userId,
+        conversationId,
+        messageType: 'user',
+      });
+      await userMessage.save();
+    }
+
     const response = await axios.post(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
@@ -37,6 +50,17 @@ const gemini = async (req, res) => {
 
     // Remove markdown formatting like ** from the response
     const cleanText = generatedText.replace(/\*\*/g, '');
+
+    // Save assistant message to database if user is authenticated
+    if (userId && conversationId) {
+      const assistantMessage = new Message({
+        text: cleanText,
+        user: userId,
+        conversationId,
+        messageType: 'assistant',
+      });
+      await assistantMessage.save();
+    }
 
     res.json({ 
       success: true,

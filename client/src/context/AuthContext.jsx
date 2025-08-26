@@ -22,7 +22,8 @@ export const AuthProvider = ({ children }) => {
       setUser(data.data.user);
       toast.update(toastId.current, { render: "User registered!", type: "success", isLoading: false, autoClose: 2000 });
     } catch (err) {
-      toast.update(toastId.current, { render: err.message || "Registration failed", type: "error", isLoading: false, autoClose: 2000 });
+      const message = err?.response?.data?.error || err?.response?.data?.message || err?.message || "Registration failed";
+      toast.update(toastId.current, { render: message, type: "error", isLoading: false, autoClose: 2000 });
     }
   };
 
@@ -33,7 +34,14 @@ export const AuthProvider = ({ children }) => {
       setUser(data.data.user);
       toast.update(toastId.current, { render: "Login successful!", type: "success", isLoading: false, autoClose: 2000 });
     } catch (err) {
-      toast.update(toastId.current, { render: err.message || "Login failed", type: "error", isLoading: false, autoClose: 2000 });
+      const raw = (err?.response?.data?.error || err?.response?.data?.message || "").toString().toLowerCase();
+      let message = "Login failed";
+      if (raw.includes("invalid password")) {
+        message = "Invalid password or username";
+      } else if (raw.includes("user not found")) {
+        message = "Please sign up";
+      }
+      toast.update(toastId.current, { render: message, type: "error", isLoading: false, autoClose: 2000 });
     }
   };
 

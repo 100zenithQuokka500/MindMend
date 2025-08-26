@@ -1,6 +1,6 @@
 import ChatBox from "./components/ChatBox";
-import Footer from "./components/Footer";
 import Navbar from "./components/Navigation/Navbar";
+import Footer from "./components/Footer";
 function Chat(){
     return(
         <>
@@ -8,7 +8,7 @@ function Chat(){
         <ChatBox/>
         <Footer/>
         </>
-        
     );
 };
+
 export default Chat;
