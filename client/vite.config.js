@@ -5,7 +5,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://mindmend-backend-19y9.onrender.com',
+        target: 'https://mindmend-backend-1y9v.onrender.com',
         changeOrigin: true,
         secure: false, 
       },
