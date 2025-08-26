@@ -17,7 +17,6 @@ function App() {
           </ProtectedRoute>
         } />
         <Route path="/helplines" element={<Helplines />} />
-
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="*" element={<Navigate to="/" />} />
